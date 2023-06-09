@@ -10,7 +10,15 @@ export class ProductService {
     private productsRepository: Repository<Product>,
   ) {}
 
-  getAllProducts(): Promise<Product[]> {
+  getAllProducts(limit?: number, sort?: 'ASC' | 'DESC'): Promise<Product[]> {
+    if (limit !== null || sort != null) {
+      const products = this.productsRepository.find({
+        take: limit,
+        order: { name: sort },
+      });
+
+      return products;
+    }
     return this.productsRepository.find();
   }
 
@@ -22,15 +30,10 @@ export class ProductService {
     return this.productsRepository.save(product);
   }
 
-  async updateProduct(product: Product, id: number): Promise<Product> {
-    let foundProduct = await this.productsRepository.findOneBy({
-      id,
-    });
+  updateProduct(product: Product, id: number) {
+    console.log(product, id);
 
-    if (!product) throw new NotFoundException('Product not found');
-
-    foundProduct = { ...product };
-    return await this.productsRepository.save(foundProduct);
+    return this.productsRepository.update({ id }, { ...product });
   }
 
   async deleteProduct(id: number): Promise<void> {

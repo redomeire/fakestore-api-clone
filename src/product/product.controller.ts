@@ -4,8 +4,10 @@ import {
   Delete,
   Get,
   Param,
+  ParseIntPipe,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { Product } from './entities/product.entity';
@@ -17,8 +19,11 @@ export class ProductController {
   // require user authentication
 
   @Get()
-  getAllProducts(): Promise<Product[]> {
-    return this.productService.getAllProducts();
+  getAllProducts(
+    @Query('limit') limit?: number,
+    @Query('sort') sort?: 'ASC' | 'DESC',
+  ): Promise<Product[]> {
+    return this.productService.getAllProducts(limit, sort);
   }
 
   @Get(':id')
@@ -31,12 +36,15 @@ export class ProductController {
     return this.productService.insertProduct(product);
   }
 
-  @Put()
-  updateProduct(@Body() product: Product, @Param() id: number) {
-    return this.productService.updateProduct(product, id);
+  @Put(':id')
+  async updateProduct(
+    @Body() product: Product,
+    @Param('id', ParseIntPipe) id: number,
+  ) {
+    await this.productService.updateProduct(product, id);
   }
 
-  @Delete()
+  @Delete(':id')
   deleteProduct(@Param() id: number) {
     return this.productService.deleteProduct(id);
   }
