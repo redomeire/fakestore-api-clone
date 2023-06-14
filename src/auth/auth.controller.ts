@@ -25,7 +25,7 @@ export class AuthController {
   }
 
   @Public()
-  // @HttpCode(HttpStatus.OK)
+  @HttpCode(HttpStatus.OK)
   @Post('register')
   signUp(@Body() user: User) {
     return this.authService.signUp(user);
