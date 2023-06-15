@@ -8,6 +8,8 @@ import { AuthModule } from './auth/auth.module';
 import { User } from './users/entities/user.entity';
 import { ProfileModule } from './profile/profile.module';
 import { Profile } from './profile/entities/profile.entity';
+import { CategoryModule } from './category/category.module';
+import { Category } from './category/entity/category.entity';
 
 @Module({
   imports: [
@@ -20,10 +22,11 @@ import { Profile } from './profile/entities/profile.entity';
       username: 'root',
       password: 'admin',
       database: 'fakestore-api',
-      entities: [Product, User, Profile],
+      entities: [Product, User, Profile, Category],
       synchronize: true,
     }),
     ProfileModule,
+    CategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
