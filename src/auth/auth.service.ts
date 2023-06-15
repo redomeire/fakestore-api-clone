@@ -56,4 +56,8 @@ export class AuthService {
 
     return newUser;
   }
+  async validate(token: string): Promise<User> {
+    const payload = this.jwtService.verify(token);
+    return this.usersService.findOne(payload.username);
+  }
 }
