@@ -10,21 +10,25 @@ import { ProfileModule } from './profile/profile.module';
 import { Profile } from './profile/entities/profile.entity';
 import { CategoryModule } from './category/category.module';
 import { Category } from './category/entity/category.entity';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
-    ProductModule,
-    AuthModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
-      port: 3308,
-      username: 'root',
-      password: 'admin',
-      database: 'fakestore-api',
+      host: process.env.DB_HOST,
+      port: parseInt(process.env.DB_PORT),
+      username: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
       entities: [Product, User, Profile, Category],
       synchronize: true,
     }),
+    ProductModule,
+    AuthModule,
     ProfileModule,
     CategoryModule,
   ],
