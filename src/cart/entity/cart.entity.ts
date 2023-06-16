@@ -7,6 +7,8 @@ import {
   ManyToOne,
   Column,
   JoinTable,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 
 @Entity({ name: 'cart' })
@@ -22,6 +24,12 @@ export class Cart {
 
   @Column()
   productId: number;
+
+  @CreateDateColumn()
+  created_at: Date;
+
+  @UpdateDateColumn()
+  updated_at: Date;
 
   @ManyToOne(() => User, (user) => user.id)
   @JoinColumn()

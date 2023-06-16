@@ -7,6 +7,8 @@ import {
   ManyToOne,
   JoinColumn,
   OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 
 @Entity({ name: 'product' })
@@ -28,6 +30,12 @@ export class Product {
 
   @Column()
   stock: number;
+
+  @CreateDateColumn()
+  created_at: Date;
+
+  @UpdateDateColumn()
+  updated_at: Date;
 
   @ManyToOne(() => Category, (category) => category.id)
   @JoinColumn()
