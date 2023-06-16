@@ -11,6 +11,8 @@ import { Profile } from './profile/entities/profile.entity';
 import { CategoryModule } from './category/category.module';
 import { Category } from './category/entity/category.entity';
 import { ConfigModule } from '@nestjs/config';
+import { CartModule } from './cart/cart.module';
+import { Cart } from './cart/entity/cart.entity';
 
 @Module({
   imports: [
@@ -24,13 +26,14 @@ import { ConfigModule } from '@nestjs/config';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [Product, User, Profile, Category],
+      entities: [Product, User, Profile, Category, Cart],
       synchronize: true,
     }),
     ProductModule,
     AuthModule,
     ProfileModule,
     CategoryModule,
+    CartModule,
   ],
   controllers: [AppController],
   providers: [AppService],
