@@ -1,20 +1,29 @@
 import { Cart } from 'src/cart/entity/cart.entity';
-import { User } from 'src/users/entities/user.entity';
+import { Product } from 'src/product/entities/product.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
+  JoinColumn,
+  Column,
   CreateDateColumn,
   UpdateDateColumn,
   OneToOne,
   ManyToOne,
-  JoinColumn,
-  Column,
 } from 'typeorm';
 
-@Entity({ name: 'order' })
-export class Order {
+@Entity({ name: 'cart-item' })
+export class CartItem {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column()
+  quantity: number;
+
+  @Column()
+  productId: number;
+
+  @Column()
+  cartId: number;
 
   @CreateDateColumn()
   created_at: Date;
@@ -22,17 +31,11 @@ export class Order {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @Column({ select: false })
-  userId: number;
-
-  @Column()
-  cartId: number;
-
-  @ManyToOne(() => User, (user) => user.id)
+  @OneToOne(() => Product, (product) => product.id)
   @JoinColumn()
-  user: User;
+  product: Product;
 
-  @OneToOne(() => Cart, (cart) => cart.id)
+  @ManyToOne(() => Cart, (cart) => cart.id)
   @JoinColumn()
   cart: Cart;
 }

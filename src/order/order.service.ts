@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Order } from './entity/order.entity';
 import { Repository } from 'typeorm';
-import { User } from 'src/users/entities/user.entity';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
@@ -30,9 +29,11 @@ export class OrderService {
     };
   }
 
-  async getOrders(user: User): Promise<any> {
+  async getOrders(token: string): Promise<any> {
+    const payload = await this.jwtService.verify(token);
+
     const foundOrders = await this.orderRepository.findBy({
-      user,
+      userId: payload.sub,
     });
 
     return {
@@ -48,7 +49,7 @@ export class OrderService {
     return {
       status: 'success',
       message: 'success get order',
-      orders: foundOrder,
+      order: foundOrder,
     };
   }
 

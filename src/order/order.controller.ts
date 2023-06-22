@@ -22,13 +22,13 @@ export class OrderController {
   }
 
   @Get(':id')
-  getOrderById(@Param() id: number) {
-    return this.orderService.getOrderById(id);
+  getOrderById(@Param() param: { id: number }) {
+    return this.orderService.getOrderById(param.id);
   }
 
   @Post()
-  createNewOrder(@Request() req, @Body() id: number) {
+  createNewOrder(@Request() req, @Body() body: { id: number }) {
     const token = req.headers.authorization.replace('Bearer ', '');
-    return this.orderService.create(id, token);
+    return this.orderService.create(body.id, token);
   }
 }

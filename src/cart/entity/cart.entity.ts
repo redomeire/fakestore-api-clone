@@ -1,4 +1,4 @@
-import { Product } from 'src/product/entities/product.entity';
+import { CartItem } from 'src/cart-item/entity/cart-item.entity';
 import { User } from 'src/users/entities/user.entity';
 import {
   Entity,
@@ -6,9 +6,9 @@ import {
   JoinColumn,
   ManyToOne,
   Column,
-  JoinTable,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
 
 @Entity({ name: 'cart' })
@@ -17,13 +17,7 @@ export class Cart {
   id: number;
 
   @Column()
-  quantity: number;
-
-  @Column()
   userId: number;
-
-  @Column()
-  productId: number;
 
   @CreateDateColumn()
   created_at: Date;
@@ -35,7 +29,7 @@ export class Cart {
   @JoinColumn()
   user: User;
 
-  @ManyToOne(() => Product, (product) => product.id)
-  @JoinTable()
-  product: Product;
+  @OneToMany(() => CartItem, (cartItem) => cartItem.id)
+  @JoinColumn()
+  cartItem: CartItem;
 }
