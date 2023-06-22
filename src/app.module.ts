@@ -13,6 +13,8 @@ import { Category } from './category/entity/category.entity';
 import { ConfigModule } from '@nestjs/config';
 import { CartModule } from './cart/cart.module';
 import { Cart } from './cart/entity/cart.entity';
+import { OrderModule } from './order/order.module';
+import { Order } from './order/entity/order.entity';
 
 @Module({
   imports: [
@@ -26,7 +28,7 @@ import { Cart } from './cart/entity/cart.entity';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [Product, User, Profile, Category, Cart],
+      entities: [Product, User, Profile, Category, Cart, Order],
       synchronize: true,
     }),
     ProductModule,
@@ -34,6 +36,7 @@ import { Cart } from './cart/entity/cart.entity';
     ProfileModule,
     CategoryModule,
     CartModule,
+    OrderModule,
   ],
   controllers: [AppController],
   providers: [AppService],
