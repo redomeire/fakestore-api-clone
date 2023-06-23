@@ -32,10 +32,10 @@ export class CartItem {
   updated_at: Date;
 
   @OneToOne(() => Product, (product) => product.id)
-  @JoinColumn()
+  @JoinColumn({ name: 'productId' })
   product: Product;
 
-  @ManyToOne(() => Cart, (cart) => cart.id)
-  @JoinColumn()
+  @ManyToOne(() => Cart, (cart) => cart.cartItem)
+  @JoinColumn({ name: 'cartId' })
   cart: Cart;
 }

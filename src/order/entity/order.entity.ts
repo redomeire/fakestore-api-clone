@@ -29,7 +29,7 @@ export class Order {
   cartId: number;
 
   @ManyToOne(() => User, (user) => user.id)
-  @JoinColumn()
+  @JoinColumn({ name: 'userId' })
   user: User;
 
   @OneToOne(() => Cart, (cart) => cart.id)

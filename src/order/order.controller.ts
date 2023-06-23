@@ -31,4 +31,9 @@ export class OrderController {
     const token = req.headers.authorization.replace('Bearer ', '');
     return this.orderService.create(body.id, token);
   }
+
+  @Post('checkout')
+  checkout() {
+    return this.orderService.checkout();
+  }
 }

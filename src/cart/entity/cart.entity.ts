@@ -29,7 +29,7 @@ export class Cart {
   @JoinColumn()
   user: User;
 
-  @OneToMany(() => CartItem, (cartItem) => cartItem.id)
+  @OneToMany(() => CartItem, (cartItem) => cartItem.cart)
   @JoinColumn()
-  cartItem: CartItem;
+  cartItem: CartItem[];
 }
