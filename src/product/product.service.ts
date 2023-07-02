@@ -36,6 +36,21 @@ export class ProductService {
     return this.productsRepository.update({ id }, { ...product });
   }
 
+  async decreaseAmount(productId: number, quantity: number) {
+    if (!productId) {
+      return {
+        status: 'fail',
+        message: 'product id must be valid',
+      };
+    }
+    const product = await this.productsRepository.findOneBy({
+      id: productId,
+    });
+
+    product.stock -= quantity;
+    await this.productsRepository.save(product);
+  }
+
   async deleteProduct(id: number): Promise<void> {
     const result = await this.productsRepository.delete(id);
 

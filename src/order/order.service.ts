@@ -78,7 +78,10 @@ export class OrderService {
       });
     });
 
-    const res = await this.paymentService.checkout(checkedProducts, order.user);
+    const res = await this.paymentService.placeOrder(
+      checkedProducts,
+      order.user,
+    );
 
     return {
       products: productItems,
