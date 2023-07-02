@@ -33,7 +33,7 @@ export class OrderController {
   }
 
   @Post('checkout')
-  checkout() {
-    return this.orderService.checkout();
+  checkout(@Body() body: { orderId: number }) {
+    return this.orderService.checkout(body.orderId);
   }
 }

@@ -55,14 +55,14 @@ export class OrderService {
     };
   }
 
-  async checkout() {
+  async checkout(orderId: number) {
     const order = await this.orderRepository
       .createQueryBuilder('order')
       .innerJoinAndSelect('order.cart', 'cart')
       .innerJoinAndSelect('order.user', 'user')
       .innerJoinAndSelect('cart.cartItem', 'cart-item')
       .innerJoinAndSelect('cart-item.product', 'product')
-      .where('order.id = :orderId', { orderId: 5 })
+      .where('order.id = :orderId', { orderId })
       .getOne();
 
     const productItems = order?.cart?.cartItem?.map((item) => item.product);
